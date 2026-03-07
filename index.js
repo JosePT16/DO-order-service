@@ -32,13 +32,15 @@ index.get('/orders', async (req, res) => {
     }
 });
 
+const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://product-service:3001';
+
 // Create order
 index.post('/orders', async (req, res) => {
     try {
         const { productId, quantity } = req.body;
 
         // Verify product exists (call product service)
-        const productResponse = await axios.get(`http://product-service:3001/products/${productId}`);
+        const productResponse = await axios.get(`${productServiceUrl}/products/${productId}`);
         const product = productResponse.data;
 
         const totalPrice = product.price * quantity;
